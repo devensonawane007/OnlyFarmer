@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+firebase-admin
+python-multipart
+Pillow
+numpy
+scikit-learn
+joblib
+requests
+httpx
+psycopg2-binary
+twilio
+fpdf2
