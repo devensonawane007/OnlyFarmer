@@ -1,76 +1,121 @@
-# Smart Farms + Farm Direct Exchange — Merged Project
+# 🌿 OnlyFarmer: The Next-Gen Agriculture Ecosystem
 
-## What's in here
+> **Bridging the gap between traditional farming and modern precision technology.**
 
-This is a merge of two projects:
-
-1. **Smart Farms with Disease Detection** — IoT monitoring, crop prediction, AR field view, plant disease detection (original smart-farms project, **unchanged frontend**)
-2. **Farm Direct Exchange** — Exporter/Importer board with real GPS map and transporter discovery (merged from auto_suggestion, added as **Tab 5**)
+OnlyFarmer is a comprehensive SaaS platform designed to empower farmers with AI-driven diagnostics, IoT real-time monitoring, and a direct-to-market exchange system. By integrating Augmented Reality (AR) with high-accuracy GPS and state-of-the-art computer vision, we provide farmers with the tools they need to increase yield, reduce waste, and connect directly with global exporters.
 
 ---
 
-## Improvements in this merge
+## 🚀 The Problem & The Solution
 
-### AR (Tab 4)
-- **Real GPS**: Uses `watchPosition` with `enableHighAccuracy: true` for continuous, live GPS from the device's GPS chip
-- **Photo capture**: 📸 button in AR view — saves a full-resolution photo from the rear camera
-- **GPS-tagged filenames**: Photos are saved with GPS coordinates and timestamp in the filename, e.g. `smartfarm_2025-01-15_14-32-10_lat19.076012_lng72.877655_acc8m.jpg`
-- **GPS overlay on photos**: Coordinates, accuracy, and timestamp are burned into the saved image
-- **Capture log**: All AR photo captures are logged to localStorage (`sf_ar_captures`) with GPS, timestamp, and file size
-- **Plot recording with GPS naming**: Plot data files now include GPS coordinates and timestamp in their identifiers (`dataFileName` field), so every plot record is traceable
+### The Problem
+Traditional farming faces several critical bottlenecks:
+- **Delayed Diagnosis**: Crop diseases often go unnoticed until it's too late, leading to significant yield loss.
+- **Data Blindness**: Lack of real-time soil and environmental data makes crop selection a guessing game.
+- **Fragmented Logistics**: Connecting with reliable transporters and exporters is manual and inefficient.
+- **Field Management Challenges**: Tracking large plots accurately without professional surveying equipment is difficult.
 
-### Farm Direct Exchange (Tab 5 — New)
-- Exporter view: see all importer requests on a map, find nearby transporters
-- Importer form: submit a crop order by address or live GPS location
-- Live Leaflet map with color-coded markers (green=exporter, orange=orders, blue=transporters)
-- All data stored in SQLite (`exchange.db`) on the backend
-- 10 pre-seeded Indian transporters across major cities
-- Backend routes at `/exchange/...`
+### The Solution: OnlyFarmer
+OnlyFarmer provides a unified "command center" for the modern farm:
+- **Instant AI Vision**: Real-time plant disease detection via smartphone camera.
+- **Precision IoT Data**: Live sensor data and ML-based crop prediction engines.
+- **Geospatial AR**: GPS-tagged field management and coordinate-stamped photo logs.
+- **Direct Exchange**: A map-based marketplace connecting Importers, Exporters, and Transporters directly.
 
 ---
 
-## Setup
+## 🛠️ Core Features
 
-### Backend (Python)
+### 1. 🧠 AI Plant Disease Detection
+Upload or capture photos of your crops. Our backend AI analyzes the image to identify potential diseases and provides immediate recommendations.
+- **Tech**: FastAPI + Pillow + scikit-learn.
+- **Route**: `POST /problem/upload`
+
+### 2. 🛰️ Geospatial AR Field (Tab 4)
+Walk your field with a live AR overlay. Capture high-accuracy GPS-tagged photos with metadata burned into the image.
+- **GPS Precision**: Uses `watchPosition` with high accuracy.
+- **Logging**: Automatically saves filenames with coordinates and timestamps for audit trails.
+
+### 3. 🗺️ Farm Direct Exchange (Tab 5)
+A decentralized marketplace for the agricultural supply chain.
+- **Exporter View**: Find nearby importer orders on a live Leaflet map.
+- **Transporter Discovery**: Search across pre-seeded professional transporters in major regions.
+- **Real-time Map**: Color-coded markers for dynamic supply-chain visibility.
+
+### 4. 📈 Smart Logistics & IoT
+- **Truck Booking**: Integrated logistics module for freight management.
+- **IoT Simulation**: Real-time sensor dashboard for soil moisture, humidity, and temperature.
+- **Crop Prediction**: ML model that suggests the most profitable crop based on your specific environmental data.
+
+---
+
+## 💻 Tech Stack
+
+| Layer | Technologies |
+|---|---|
+| **Frontend** | React, Vite, TailwindCSS, Framer Motion, Leaflet, Three.js |
+| **Backend** | Python (FastAPI), Uvicorn, Node.js (Express) |
+| **Database** | SQLite3, Firebase Admin SDK |
+| **AI/ML** | Scikit-learn, Joblib, Pillow |
+| **Integrations** | Gemini AI (Assistant), Twilio (IVR), Leaflet GPS |
+
+---
+
+## ⚙️ Installation & Setup
+
+### Prerequisites
+- Python 3.9+
+- Node.js 18+
+- A Google Gemini API Key (for the Assistant)
+
+### 1. Backend Setup
 ```bash
-cd backend
+cd merged/backend
+# Install dependencies
 pip install -r requirements.txt
+# Start the server
 uvicorn main:app --reload --port 8000
 ```
+> [!NOTE]
+> Ensure your `.env` file in the backend folder contains your Twilio and Google API credentials.
 
-### Frontend (React + Vite)
+### 2. Frontend Setup
 ```bash
-cd frontend
+cd merged/frontend
+# Install dependencies
 npm install
+# Launch development server
 npm run dev
 ```
-
-The frontend runs at `http://localhost:5173` and connects to the backend at `http://localhost:8000`.
-
----
-
-## Tab Structure
-
-| Tab | Name | Contents |
-|-----|------|----------|
-| 1 | Overview | Tip of day, IoT sensors, Disease detection |
-| 2 | Smart Farming | Crop prediction, expenses, crop prices |
-| 3 | Logistics | Fertilizer tracking, truck booking |
-| 4 | AR Field | Live AR camera with GPS, field map, setup |
-| 5 | Exchange | Farm Direct Exchange (exporter/importer board) |
+The app will be available at `http://localhost:5173`.
 
 ---
 
-## AR Photo Naming Convention
+## 📖 Module Guide
 
-```
-smartfarm_{date}_{time}_lat{latitude}_lng{longitude}_{accuracy}.jpg
+| Tab | Module | Purpose |
+|---|---|---|
+| **01** | **Overview** | Daily agricultural tips, IoT status, and quick AI disease detection. |
+| **02** | **Smart Farming** | Crop prediction engines, expense tracking, and live market prices. |
+| **03** | **Logistics** | Fertilizer inventory management and truck booking system. |
+| **04** | **AR Field** | Professional field surveying with GPS photo capture and plot recording. |
+| **05** | **Exchange** | Direct Export/Import marketplace with interactive map discovery. |
 
-Example:
-smartfarm_2025-01-15_14-32-10_lat19.076012_lng72.877655_acc8m.jpg
+---
+
+## 📋 Folder Structure
+```text
+merged/
+├── backend/           # FastAPI/Python server & ML models
+├── frontend/          # React/Vite/Tailwind source code
+├── docs/              # Additional documentation
+└── package.json       # Workspace dependencies
 ```
 
-When GPS is unavailable:
-```
-smartfarm_2025-01-15_14-32-10_lat_no-gps_lng_no-gps_simulated.jpg
-```
+---
+
+## 🤝 Contribution
+Contributions are welcome! Please ensure you update tests and documentation before submitting a PR.
+
+## 📄 License
+This project is licensed under the ISC License.
